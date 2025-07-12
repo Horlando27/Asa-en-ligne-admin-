@@ -1,91 +1,340 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Interface Admin - Asa En Ligne</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      color: #333;
+      min-height: 100vh;
       padding: 20px;
     }
+    
+    .header {
+      text-align: center;
+      padding: 20px 0;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .header h1 {
+      color: #1a2a6c;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      color: #555;
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .stats-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .stat-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      min-width: 200px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-card i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #1a2a6c;
+    }
+    
+    .stat-card h3 {
+      font-size: 1.8rem;
+      color: #1a2a6c;
+      margin-bottom: 5px;
+    }
+    
+    .stat-card p {
+      color: #666;
+      font-weight: 500;
+    }
+    
     .container {
-      max-width: 900px;
-      margin: 20px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      max-width: 1200px;
+      margin: 0 auto 30px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
-    h2 { text-align: center; }
+    
+    .container h2 {
+      text-align: center;
+      color: #1a2a6c;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #1a2a6c;
+    }
+    
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      min-width: 800px;
     }
+    
     th, td {
       border: 1px solid #ddd;
-      padding: 10px;
+      padding: 12px 15px;
       text-align: center;
     }
-    th { background: #28a745; color: #fff; }
-    button {
-      padding: 5px 10px;
-      background: #28a745;
+    
+    th {
+      background: #1a2a6c;
       color: #fff;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    tr:hover {
+      background-color: #f1f7ff;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      padding: 8px 15px;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
-      margin: 2px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
     }
-    button:hover { background: #218838; }
-    .refresh {
-      margin-top: 10px;
-      background: #007bff;
+    
+    button i {
+      font-size: 14px;
     }
-    .pay-button {
-      display: inline-block;
-      margin-top: 10px;
+    
+    .btn-confirm {
+      background: #28a745;
+      color: white;
+    }
+    
+    .btn-confirm:hover {
+      background: #218838;
+    }
+    
+    .btn-cancel {
+      background: #dc3545;
+      color: white;
+    }
+    
+    .btn-cancel:hover {
+      background: #bd2130;
+    }
+    
+    .btn-refresh {
+      background: #17a2b8;
+      color: white;
+      margin-top: 15px;
+      padding: 10px 20px;
+    }
+    
+    .btn-refresh:hover {
+      background: #138496;
+    }
+    
+    .btn-message {
       background: #ffc107;
+      color: #333;
+    }
+    
+    .btn-message:hover {
+      background: #e0a800;
+    }
+    
+    .btn-delete {
+      background: #6c757d;
+      color: white;
+    }
+    
+    .btn-delete:hover {
+      background: #5a6268;
+    }
+    
+    .btn-reactivate {
+      background: #6610f2;
+      color: white;
+    }
+    
+    .btn-reactivate:hover {
+      background: #5300e0;
+    }
+    
+    .status-active {
+      color: #28a745;
+      font-weight: 600;
+    }
+    
+    .status-expired {
+      color: #dc3545;
+      font-weight: 600;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: white;
+      font-size: 0.9rem;
+      margin-top: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .stats-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .stat-card {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+      
+      th, td {
+        padding: 8px 10px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="header">
+    <h1>Interface Admin - Asa En Ligne</h1>
+    <p>Gestion des paiements et des comptes utilisateurs</p>
+  </div>
+  
+  <div class="stats-container">
+    <div class="stat-card">
+      <i class="fas fa-user-check"></i>
+      <h3 id="paid-count">0</h3>
+      <p>Personnes ayant payé</p>
+    </div>
+    
+    <div class="stat-card">
+      <i class="fas fa-users"></i>
+      <h3 id="total-count">0</h3>
+      <p>Total des inscrits</p>
+    </div>
+    
+    <div class="stat-card">
+      <i class="fas fa-hourglass-half"></i>
+      <h3 id="pending-count">0</h3>
+      <p>Demandes en attente</p>
+    </div>
+  </div>
+  
   <div class="container">
-    <h2>Interface Admin - Demandes de Paiement en Attente</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Nom Utilisateur</th>
-          <th>Numéro de téléphone</th>
-          <th>Montant</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="pending-table-body">
-        <!-- Les demandes en attente s'afficheront ici -->
-      </tbody>
-    </table>
-    <button class="refresh" onclick="loadPendingRequests()">Rafraîchir la liste des demandes</button>
-  </div>  <div class="container">
+    <h2>Demandes de Paiement en Attente</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom Utilisateur</th>
+            <th>Numéro de téléphone</th>
+            <th>Montant</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="pending-table-body">
+          <!-- Les demandes en attente s'afficheront ici -->
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 20px;">Chargement des demandes...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-refresh" onclick="loadPendingRequests()">
+      <i class="fas fa-sync-alt"></i> Rafraîchir la liste des demandes
+    </button>
+  </div>
+
+  <div class="container">
     <h2>Liste des Comptes Confirmés</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Email</th>
-          <th>Nom Utilisateur</th>
-          <th>Contrat Expire le</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="confirmed-table-body">
-        <!-- Les comptes confirmés s'afficheront ici -->
-      </tbody>
-    </table>
-    <button class="refresh" onclick="loadConfirmedUsers()">Rafraîchir la liste des comptes</button>
-  </div>  <!-- Importation des modules Firebase -->  <script type="module">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Nom Utilisateur</th>
+            <th>Contrat Expire le</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="confirmed-table-body">
+          <!-- Les comptes confirmés s'afficheront ici -->
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 20px;">Chargement des comptes...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-refresh" onclick="loadConfirmedUsers()">
+      <i class="fas fa-sync-alt"></i> Rafraîchir la liste des comptes
+    </button>
+  </div>
+
+  <div class="footer">
+    <p>Asa En Ligne &copy; 2023 - Plateforme de gestion administrative</p>
+  </div>
+
+  <!-- Importation des modules Firebase -->
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
     import {
       getFirestore,
@@ -94,9 +343,8 @@
       updateDoc,
       deleteDoc,
       doc,
-      serverTimestamp,
-      arrayRemove,
-      arrayUnion
+      query,
+      where
     } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
     // Configuration Firebase
@@ -113,51 +361,114 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Charger les demandes en attente
-    async function loadPendingRequests() {
-      const tableBody = document.getElementById("pending-table-body");
-      tableBody.innerHTML = "";
-      const querySnapshot = await getDocs(collection(db, "paymentRequests"));
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        if (data.status === "pending") {
-          tableBody.innerHTML += `
-            <tr>
-              <td>${data.fullName}</td>
-              <td>${data.phone}</td>
-              <td>${data.amount}</td>
-              <td>
-                <button onclick="confirmPayment('${docSnap.id}', '${data.userId}', '${data.amount}')">Confirmer</button>
-                <button onclick="cancelPayment('${docSnap.id}', '${data.userId}')">Annuler</button>
-              </td>
-            </tr>
-          `;
-        }
-      });
+    // Fonction: Charger les statistiques
+    async function loadStatistics() {
+      try {
+        // Total des utilisateurs
+        const usersSnapshot = await getDocs(collection(db, "users"));
+        const totalCount = usersSnapshot.size;
+        document.getElementById('total-count').textContent = totalCount;
+        
+        // Utilisateurs ayant payé
+        let paidCount = 0;
+        usersSnapshot.forEach(doc => {
+          if(doc.data().paymentStatus === "confirmed") {
+            paidCount++;
+          }
+        });
+        document.getElementById('paid-count').textContent = paidCount;
+        
+        // Demandes en attente
+        const requestsSnapshot = await getDocs(collection(db, "paymentRequests"));
+        let pendingCount = 0;
+        requestsSnapshot.forEach(doc => {
+          if(doc.data().status === "pending") {
+            pendingCount++;
+          }
+        });
+        document.getElementById('pending-count').textContent = pendingCount;
+        
+      } catch (error) {
+        console.error("Erreur lors du chargement des statistiques: ", error);
+      }
     }
 
-    // Confirmer une demande de paiement
+    // Fonction: Charger les demandes de paiement en attente
+    async function loadPendingRequests() {
+      try {
+        const tableBody = document.getElementById("pending-table-body");
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 15px;">Chargement en cours...</td></tr>';
+        
+        const querySnapshot = await getDocs(collection(db, "paymentRequests"));
+        let requestsHTML = '';
+        
+        if(querySnapshot.empty) {
+          requestsHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">Aucune demande en attente</td></tr>';
+        } else {
+          querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            if(data.status === "pending") {
+              const requestDate = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'N/A';
+              
+              requestsHTML += `
+                <tr>
+                  <td>${data.fullName || 'N/A'}</td>
+                  <td>${data.phone || 'N/A'}</td>
+                  <td>${data.amount || '0'} Ar</td>
+                  <td>${requestDate}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn-confirm" onclick="confirmPayment('${docSnap.id}', '${data.userId}', '${data.amount}')">
+                        <i class="fas fa-check"></i> Confirmer
+                      </button>
+                      <button class="btn-cancel" onclick="cancelPayment('${docSnap.id}', '${data.userId}')">
+                        <i class="fas fa-times"></i> Annuler
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }
+          });
+          
+          if(requestsHTML === '') {
+            requestsHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">Aucune demande en attente</td></tr>';
+          }
+        }
+        
+        tableBody.innerHTML = requestsHTML;
+        loadStatistics(); // Mettre à jour les statistiques
+      } catch (error) {
+        console.error("Erreur lors du chargement des demandes: ", error);
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #dc3545;">Erreur de chargement</td></tr>';
+      }
+    }
+
+    // Fonction: Confirmer une demande de paiement
     window.confirmPayment = async function(requestId, userId, amount) {
+      if(!confirm("Confirmer ce paiement?")) return;
+      
       try {
         const numericAmount = parseFloat(amount);
-        const monthsToAdd = numericAmount / 1000;
+        const monthsToAdd = numericAmount / 1000; // 1000Ar = 1 mois
         let expiryDate = new Date();
         expiryDate.setMonth(expiryDate.getMonth() + monthsToAdd);
+        
         const activationCode = String(Math.floor(1000 + Math.random() * 9000));
+        
+        // Mettre à jour le compte utilisateur
         const userRef = doc(db, "users", userId);
-
-        // Mettre à jour compte utilisateur
         await updateDoc(userRef, {
           activationCode: activationCode,
           paymentStatus: "confirmed",
           contractExpiry: expiryDate
         });
-
+        
         // Mettre à jour la demande de paiement
         const requestRef = doc(db, "paymentRequests", requestId);
         await updateDoc(requestRef, { status: "confirmed" });
-
-        alert("Paiement confirmé.\nCode d'activation: " + activationCode + "\nContrat actif jusqu'au " + expiryDate.toLocaleDateString());
+        
+        alert(`Paiement confirmé!\nCode d'activation: ${activationCode}\nContrat actif jusqu'au ${expiryDate.toLocaleDateString()}`);
         loadPendingRequests();
         loadConfirmedUsers();
       } catch (error) {
@@ -165,13 +476,18 @@
       }
     };
 
-    // Annuler une demande de paiement
+    // Fonction: Annuler une demande de paiement
     window.cancelPayment = async function(requestId, userId) {
+      if(!confirm("Annuler cette demande de paiement?")) return;
+      
       try {
-        await deleteDoc(doc(db, "paymentRequests", requestId));
+        const requestRef = doc(db, "paymentRequests", requestId);
+        await deleteDoc(requestRef);
+        
         const userRef = doc(db, "users", userId);
         await updateDoc(userRef, { paymentStatus: "not_paid" });
-        alert("Demande annulée.");
+        
+        alert("Demande annulée avec succès.");
         loadPendingRequests();
         loadConfirmedUsers();
       } catch (error) {
@@ -179,65 +495,141 @@
       }
     };
 
-    // Charger la liste des comptes confirmés
+    // Fonction: Charger la liste des comptes confirmés
     async function loadConfirmedUsers() {
-      const tableBody = document.getElementById("confirmed-table-body");
-      tableBody.innerHTML = "";
-      const querySnapshot = await getDocs(collection(db, "users"));
-      const now = new Date();
-
-      querySnapshot.forEach(async (docSnap) => {
-        const data = docSnap.data();
-        if (data.paymentStatus === "confirmed") {
-          const expiryDate = data.contractExpiry ? data.contractExpiry.toDate() : null;
-          let status = "Actif";
-          let actionButton = "";
-
-          if (expiryDate && now > expiryDate) {
-            status = "Désactivé";
-            actionButton = `<button onclick="reactivateAccount('${docSnap.id}')">Réactiver</button>`;
-            // Supprimer l'ancien code d'activation
-            const userRef = doc(db, "users", docSnap.id);
-            await updateDoc(userRef, {
-              activationCode: null,
-              paymentStatus: "not_paid"
-            });
+      try {
+        const tableBody = document.getElementById("confirmed-table-body");
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 15px;">Chargement en cours...</td></tr>';
+        
+        const querySnapshot = await getDocs(collection(db, "users"));
+        let usersHTML = '';
+        let count = 0;
+        
+        querySnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          if(data.paymentStatus === "confirmed" && data.activationCode) {
+            count++;
+            const expiryDate = data.contractExpiry ? data.contractExpiry.toDate() : null;
+            const now = new Date();
+            let status = "Actif";
+            let statusClass = "status-active";
+            let actionButtons = '';
+            
+            if(expiryDate && now > expiryDate) {
+              status = "Expiré";
+              statusClass = "status-expired";
+              actionButtons += `
+                <button class="btn-reactivate" onclick="reactivateAccount('${docSnap.id}')">
+                  <i class="fas fa-redo-alt"></i> Réactiver
+                </button>
+              `;
+            }
+            
+            actionButtons += `
+              <button class="btn-message" onclick="sendMessage('${docSnap.id}')">
+                <i class="fas fa-envelope"></i> Message
+              </button>
+              <button class="btn-delete" onclick="deleteUser('${docSnap.id}')">
+                <i class="fas fa-trash-alt"></i> Supprimer
+              </button>
+            `;
+            
+            usersHTML += `
+              <tr>
+                <td>${data.email || "N/A"}</td>
+                <td>${data.fullName || "N/A"}</td>
+                <td>${expiryDate ? expiryDate.toLocaleDateString() : "N/A"}</td>
+                <td class="${statusClass}">${status}</td>
+                <td>
+                  <div class="btn-group">
+                    ${actionButtons}
+                  </div>
+                </td>
+              </tr>
+            `;
           }
-
-          tableBody.innerHTML += `
-            <tr>
-              <td>${data.email || 'N/A'}</td>
-              <td>${data.fullName}</td>
-              <td>${expiryDate ? expiryDate.toLocaleDateString() : 'N/A'}</td>
-              <td>${status}</td>
-              <td>${actionButton}</td>
-            </tr>
-          `;
+        });
+        
+        if(count === 0) {
+          usersHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">Aucun compte confirmé</td></tr>';
         }
-      });
+        
+        tableBody.innerHTML = usersHTML;
+        loadStatistics(); // Mettre à jour les statistiques
+      } catch (error) {
+        console.error("Erreur lors du chargement des utilisateurs: ", error);
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #dc3545;">Erreur de chargement</td></tr>';
+      }
     }
 
-    // Réactiver un compte expiré et générer un nouveau code
+    // Fonction: Réactiver un compte expiré
     window.reactivateAccount = async function(userId) {
       const newAmount = prompt("Entrez le montant payé pour réactiver (ex: 1000, 2000, etc.):");
-      if (!newAmount) return;
+      if(!newAmount) return;
+      
       const numericAmount = parseFloat(newAmount);
-      if (isNaN(numericAmount)) {
+      if(isNaN(numericAmount)) {
         alert("Montant invalide.");
         return;
       }
+      
       const monthsToAdd = numericAmount / 1000;
       let newExpiry = new Date();
       newExpiry.setMonth(newExpiry.getMonth() + monthsToAdd);
-      const newCode = String(Math.floor(1000 + Math.random() * 9000));
-      const userRef = doc(db, "users", userId);
-      await updateDoc(userRef, { activationCode: newCode, contractExpiry: newExpiry, paymentStatus: "confirmed" });
-      alert("Compte réactivé jusqu'au " + newExpiry.toLocaleDateString() + ".\nNouveau code d'activation: " + newCode);
-      loadConfirmedUsers();
+      
+      try {
+        const userRef = doc(db, "users", userId);
+        await updateDoc(userRef, { 
+          contractExpiry: newExpiry, 
+          paymentStatus: "confirmed" 
+        });
+        
+        alert(`Compte réactivé avec succès!\nNouvelle date d'expiration: ${newExpiry.toLocaleDateString()}`);
+        loadConfirmedUsers();
+      } catch (error) {
+        alert("Erreur lors de la réactivation: " + error.message);
+      }
+    };
+
+    // Fonction: Envoyer un message à l'utilisateur
+    window.sendMessage = function(userId) {
+      const message = prompt("Entrez votre message pour l'utilisateur:");
+      if(message) {
+        alert(`Message envoyé à l'utilisateur:\n\n"${message}"`);
+        // Ici, vous pourriez ajouter l'appel à votre service de messagerie
+        console.log(`Message envoyé à l'utilisateur ${userId}: ${message}`);
+      }
+    };
+
+    // Fonction: Supprimer un utilisateur
+    window.deleteUser = async function(userId) {
+      if(!confirm("Êtes-vous sûr de vouloir supprimer définitivement cet utilisateur?")) return;
+      
+      try {
+        // Supprimer l'utilisateur
+        const userRef = doc(db, "users", userId);
+        await deleteDoc(userRef);
+        
+        // Supprimer les demandes de paiement associées
+        const paymentRequests = query(collection(db, "paymentRequests"), where("userId", "==", userId));
+        const requestsSnapshot = await getDocs(paymentRequests);
+        
+        requestsSnapshot.forEach(async (requestDoc) => {
+          await deleteDoc(doc(db, "paymentRequests", requestDoc.id));
+        });
+        
+        alert("Utilisateur supprimé avec succès.");
+        loadConfirmedUsers();
+        loadPendingRequests();
+      } catch (error) {
+        alert("Erreur lors de la suppression: " + error.message);
+      }
     };
 
     // Chargement initial
     loadPendingRequests();
     loadConfirmedUsers();
-  </script></body>
-    </html>
+    loadStatistics();
+  </script>
+</body>
+      </html>
